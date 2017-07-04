@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# metadata
+.csv
+.tar.gz
+.zip
+data/
