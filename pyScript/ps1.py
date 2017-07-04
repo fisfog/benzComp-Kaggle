@@ -13,14 +13,31 @@ train_y = train['y']
 train.drop('y', axis=1, inplace=True)
 
 no_info_col = []
-for c in train:
+obj_col = []
+for c in train.columns:
 		if len(set(train[c]))==1:
 				no_info_col.append(c)
+		if train[c].dtype==object:
+				lbe = preprocessing.LabelEncoder()
+				lbe.fit(list(train[c].values)+list(test[c].values))
+				train[c] = lbe.transform(train[c])
+				test[c] = lbe.transform(test[c])
 
 print(no_info_col)
+
 train.drop(no_info_col, axis=1, inplace=True)
 test.drop(no_info_col, axis=1, inplace=True)
 
+
 enc = preprocessing.OneHotEncoder()
-enc.fit(train.to_arr)
-train_pre = enc.transform(train)
+trainx = enc.fit_transform(train)
+testx = enc.transform(test)
+print(trainx.shape,testx.shape)
+
+from sklearn.linear_model import SGDRegressor
+
+model = SGDRegressor()
+model.fit(trainx,train_y)
+
+#preds = model.predict(testx)
+

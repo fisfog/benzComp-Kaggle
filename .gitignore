@@ -105,3 +105,4 @@ ENV/
 .tar.gz
 .zip
 data/
+result/
