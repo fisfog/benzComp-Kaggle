@@ -26,8 +26,8 @@ for c in train.columns:
 
 print(no_info_col)
 
-train.drop(no_info_col, axis=1, inplace=True)
-test.drop(no_info_col, axis=1, inplace=True)
+#train.drop(no_info_col, axis=1, inplace=True)
+#test.drop(no_info_col, axis=1, inplace=True)
 
 
 enc = preprocessing.OneHotEncoder(handle_unknown='ignore')
@@ -75,5 +75,5 @@ print(r2_score(dtrain.get_label(), model.predict(dtrain)))
 
 preds = model.predict(dtest)
 
-output = pd.DataFrame({'id':test.index,'y':preds})
-output.to_csv('../result/oneHot_xgb_default.csv', index=False)
+#output = pd.DataFrame({'id':test.index,'y':preds})
+#output.to_csv('../result/oneHot_xgb_default.csv', index=False)
