@@ -40,10 +40,10 @@ from sklearn.linear_model import SGDRegressor
 
 # prepare dict of params for xgboost to run with
 xgb_params = {
-    'n_trees': 500, 
-    'eta': 0.005,
-    'max_depth': 4,
-    'subsample': 0.95,
+    'n_trees': 300, 
+    'eta': 0.01,
+    'max_depth': 8,
+    'subsample': 0.9,
     'objective': 'reg:linear',
     'eval_metric': 'rmse',
     'base_score': y_mean, # base prediction = mean(target)
@@ -66,7 +66,7 @@ cv_result = xgb.cv(xgb_params,
 num_boost_rounds = len(cv_result)
 print(num_boost_rounds)
 
-model = xgb.train(dict(xgb_params, silent=0), dtrain, num_boost_round=num_boost_rounds)
+model = xgb.train(dict(xgb_params, silent=1), dtrain, num_boost_round=num_boost_rounds)
 
 from sklearn.metrics import r2_score
 
@@ -75,5 +75,5 @@ print(r2_score(dtrain.get_label(), model.predict(dtrain)))
 
 preds = model.predict(dtest)
 
-#output = pd.DataFrame({'id':test.index,'y':preds})
-#output.to_csv('../result/oneHot_xgb_default.csv', index=False)
+output = pd.DataFrame({'id':test.index,'y':preds})
+output.to_csv('../result/oneHot_xgb_default2.csv', index=False)
